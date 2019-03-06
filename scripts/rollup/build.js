@@ -310,10 +310,7 @@ function getPlugins(
     bundleType === UMD_DEV ||
     bundleType === UMD_PROD ||
     bundleType === UMD_PROFILING;
-  const isFBBundle =
-    bundleType === FB_WWW_DEV ||
-    bundleType === FB_WWW_PROD ||
-    bundleType === FB_WWW_PROFILING;
+  const isFBBundle = isFacebookBundle(bundleType);
   const isRNBundle =
     bundleType === RN_OSS_DEV ||
     bundleType === RN_OSS_PROD ||
@@ -440,6 +437,14 @@ function shouldSkipBundle(bundle, bundleType) {
   return false;
 }
 
+function isFacebookBundle(bundleType) {
+  return (
+    bundleType === FB_WWW_DEV ||
+    bundleType === FB_WWW_PROD ||
+    bundleType === FB_WWW_PROFILING
+  );
+}
+
 async function createBundle(bundle, bundleType) {
   if (shouldSkipBundle(bundle, bundleType)) {
     return;
@@ -452,11 +457,7 @@ async function createBundle(bundle, bundleType) {
   const packageName = Packaging.getPackageName(bundle.entry);
 
   let resolvedEntry = require.resolve(bundle.entry);
-  if (
-    bundleType === FB_WWW_DEV ||
-    bundleType === FB_WWW_PROD ||
-    bundleType === FB_WWW_PROFILING
-  ) {
+  if (isFacebookBundle(bundleType)) {
     const resolvedFBEntry = resolvedEntry.replace('.js', '.fb.js');
     if (fs.existsSync(resolvedFBEntry)) {
       resolvedEntry = resolvedFBEntry;
@@ -505,6 +506,9 @@ async function createBundle(bundle, bundleType) {
       pureExternalModules
     ),
   };
+
+  const rollupConfigFBBundle = Object.assign({}, rollupConfig, {legacy: true});
+
   const [mainOutputPath, ...otherOutputPaths] = Packaging.getBundleOutputPaths(
     bundleType,
     filename,
@@ -520,8 +524,13 @@ async function createBundle(bundle, bundleType) {
 
   console.log(`${chalk.bgYellow.black(' BUILDING ')} ${logKey}`);
   try {
-    const result = await rollup(rollupConfig);
-    await result.write(rollupOutputOptions);
+    if (isFacebookBundle(bundleType)) {
+      const resultFBBundle = await rollupLegacy(rollupConfigFBBundle);
+      await resultFBBundle.write(rollupOutputOptions);
+    } else {
+      const result = await rollup(rollupConfig);
+      await result.write(rollupOutputOptions);
+    }
   } catch (error) {
     console.log(`${chalk.bgRed.black(' OH NOES! ')} ${logKey}\n`);
     handleRollupError(error);

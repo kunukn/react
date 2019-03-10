@@ -101,17 +101,17 @@ const closureOptions = {
 function getBabelConfig(updateBabelOptions, bundleType, filename) {
   let options = {
     exclude: '/**/node_modules/**',
-    "presets": [
-    [
-      "env",
-      {
-        "modules": false,
-        "targets": {
-          "node": "current"
-        }
-      }
-    ]
-  ],
+    presets: [
+      [
+        'env',
+        {
+          modules: false,
+          targets: {
+            node: 'current',
+          },
+        },
+      ],
+    ],
     plugins: [],
   };
   if (updateBabelOptions) {
@@ -641,7 +641,6 @@ async function buildEverything() {
   // and to avoid any potential race conditions.
   // eslint-disable-next-line no-for-of-loops/no-for-of-loops
   for (const bundle of Bundles.bundles) {
-
     if (bundle.entry !== 'react-dom') continue;
 
     // await createBundle(bundle, UMD_DEV);

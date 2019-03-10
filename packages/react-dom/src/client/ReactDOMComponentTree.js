@@ -22,7 +22,7 @@ export let precacheFiberNode = (hostInst, node) => {
  * Given a DOM node, return the closest ReactDOMComponent or
  * ReactDOMTextComponent instance ancestor.
  */
-export let getClosestInstanceFromNode = (node) => {
+export let getClosestInstanceFromNode = node => {
   if (node[internalInstanceKey]) {
     return node[internalInstanceKey];
   }
@@ -50,7 +50,7 @@ export let getClosestInstanceFromNode = (node) => {
  * Given a DOM node, return the ReactDOMComponent or ReactDOMTextComponent
  * instance, or null if the node was not rendered by this React.
  */
-export let getInstanceFromNode = (node) => {
+export let getInstanceFromNode = node => {
   const inst = node[internalInstanceKey];
   if (inst) {
     if (inst.tag === HostComponent || inst.tag === HostText) {
@@ -66,7 +66,7 @@ export let getInstanceFromNode = (node) => {
  * Given a ReactDOMComponent or ReactDOMTextComponent, return the corresponding
  * DOM node.
  */
-export let getNodeFromInstance = (inst) => {
+export let getNodeFromInstance = inst => {
   if (inst.tag === HostComponent || inst.tag === HostText) {
     // In Fiber this, is just the state node right now. We assume it will be
     // a host component or host text.
@@ -76,12 +76,12 @@ export let getNodeFromInstance = (inst) => {
   // Without this first invariant, passing a non-DOM-component triggers the next
   // invariant for a missing parent, which is super confusing.
   invariant(false, 'getNodeFromInstance: Invalid argument.');
-}
+};
 
-export let getFiberCurrentPropsFromNode = (node) => {
+export let getFiberCurrentPropsFromNode = node => {
   return node[internalEventHandlersKey] || null;
-}
+};
 
 export let updateFiberProps = (node, props) => {
   node[internalEventHandlersKey] = props;
-}
+};

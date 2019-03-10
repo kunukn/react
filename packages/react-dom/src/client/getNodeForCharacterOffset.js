@@ -15,12 +15,12 @@ import {TEXT_NODE} from '../shared/HTMLNodeType';
  * @param {DOMElement|DOMTextNode} node
  * @return {DOMElement|DOMTextNode}
  */
-function getLeafNode(node) {
+let getLeafNode = node => {
   while (node && node.firstChild) {
     node = node.firstChild;
   }
   return node;
-}
+};
 
 /**
  * Get the next sibling within a container. This will walk up the
@@ -29,14 +29,14 @@ function getLeafNode(node) {
  * @param {DOMElement|DOMTextNode} node
  * @return {?DOMElement|DOMTextNode}
  */
-function getSiblingNode(node) {
+let getSiblingNode = node => {
   while (node) {
     if (node.nextSibling) {
       return node.nextSibling;
     }
     node = node.parentNode;
   }
-}
+};
 
 /**
  * Get object describing the nodes which contain characters at offset.
@@ -45,7 +45,7 @@ function getSiblingNode(node) {
  * @param {number} offset
  * @return {?object}
  */
-function getNodeForCharacterOffset(root: Element, offset: number): ?Object {
+let getNodeForCharacterOffset = (root: Element, offset: number): ?Object => {
   let node = getLeafNode(root);
   let nodeStart = 0;
   let nodeEnd = 0;
@@ -66,6 +66,6 @@ function getNodeForCharacterOffset(root: Element, offset: number): ?Object {
 
     node = getLeafNode(getSiblingNode(node));
   }
-}
+};
 
 export default getNodeForCharacterOffset;

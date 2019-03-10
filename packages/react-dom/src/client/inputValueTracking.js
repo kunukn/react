@@ -15,7 +15,7 @@ type ValueTracker = {
 type WrapperState = {_valueTracker?: ?ValueTracker};
 type ElementWithValueTracker = HTMLInputElement & WrapperState;
 
-function isCheckable(elem: HTMLInputElement) {
+let isCheckable = (elem: HTMLInputElement) => {
   const type = elem.type;
   const nodeName = elem.nodeName;
   return (
@@ -23,11 +23,11 @@ function isCheckable(elem: HTMLInputElement) {
     nodeName.toLowerCase() === 'input' &&
     (type === 'checkbox' || type === 'radio')
   );
-}
+};
 
-function getTracker(node: ElementWithValueTracker) {
+let getTracker = (node: ElementWithValueTracker) => {
   return node._valueTracker;
-}
+};
 
 function detachTracker(node: ElementWithValueTracker) {
   node._valueTracker = null;

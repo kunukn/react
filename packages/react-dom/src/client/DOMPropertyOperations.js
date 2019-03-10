@@ -23,12 +23,12 @@ import type {PropertyInfo} from '../shared/DOMProperty';
  * The "expected" argument is used as a hint of what the expected value is.
  * Some properties have multiple equivalent values.
  */
-export function getValueForProperty(
+export let getValueForProperty = (
   node: Element,
   name: string,
   expected: mixed,
   propertyInfo: PropertyInfo,
-): mixed {
+): mixed => {
   if (__DEV__) {
     if (propertyInfo.mustUseProperty) {
       const {propertyName} = propertyInfo;
@@ -79,7 +79,7 @@ export function getValueForProperty(
       }
     }
   }
-}
+};
 
 /**
  * Get the value for a attribute on a node. Only used in DEV for SSR validation.

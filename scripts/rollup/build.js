@@ -88,8 +88,8 @@ const errorCodeOpts = {
 
 const closureOptions = {
   compilation_level: 'SIMPLE',
-  language_in: 'ECMASCRIPT5_STRICT',
-  language_out: 'ECMASCRIPT5_STRICT',
+  language_in: 'ECMASCRIPT_2015',
+  language_out: 'ECMASCRIPT_2015',
   env: 'CUSTOM',
   warning_level: 'QUIET',
   apply_input_source_maps: false,
@@ -101,7 +101,17 @@ const closureOptions = {
 function getBabelConfig(updateBabelOptions, bundleType, filename) {
   let options = {
     exclude: '/**/node_modules/**',
-    presets: [],
+    "presets": [
+    [
+      "env",
+      {
+        "modules": false,
+        "targets": {
+          "node": "current"
+        }
+      }
+    ]
+  ],
     plugins: [],
   };
   if (updateBabelOptions) {
@@ -341,8 +351,11 @@ function getPlugins(
     stripBanner({
       exclude: 'node_modules/**/*',
     }),
-    // Compile to ES5.
-    babel(getBabelConfig(updateBabelOptions, bundleType)),
+    // Compile
+    babel({
+      babelrc: true,
+      exclude: 'node_modules/**',
+    }),
     // Remove 'use strict' from individual source files.
     {
       transform(source) {
@@ -628,21 +641,24 @@ async function buildEverything() {
   // and to avoid any potential race conditions.
   // eslint-disable-next-line no-for-of-loops/no-for-of-loops
   for (const bundle of Bundles.bundles) {
-    await createBundle(bundle, UMD_DEV);
+
+    if (bundle.entry !== 'react-dom') continue;
+
+    // await createBundle(bundle, UMD_DEV);
     await createBundle(bundle, UMD_PROD);
-    await createBundle(bundle, UMD_PROFILING);
-    await createBundle(bundle, NODE_DEV);
-    await createBundle(bundle, NODE_PROD);
-    await createBundle(bundle, NODE_PROFILING);
-    await createBundle(bundle, FB_WWW_DEV);
-    await createBundle(bundle, FB_WWW_PROD);
-    await createBundle(bundle, FB_WWW_PROFILING);
-    await createBundle(bundle, RN_OSS_DEV);
-    await createBundle(bundle, RN_OSS_PROD);
-    await createBundle(bundle, RN_OSS_PROFILING);
-    await createBundle(bundle, RN_FB_DEV);
-    await createBundle(bundle, RN_FB_PROD);
-    await createBundle(bundle, RN_FB_PROFILING);
+    // await createBundle(bundle, UMD_PROFILING);
+    // await createBundle(bundle, NODE_DEV);
+    // await createBundle(bundle, NODE_PROD);
+    // await createBundle(bundle, NODE_PROFILING);
+    // await createBundle(bundle, FB_WWW_DEV);
+    // await createBundle(bundle, FB_WWW_PROD);
+    // await createBundle(bundle, FB_WWW_PROFILING);
+    // await createBundle(bundle, RN_OSS_DEV);
+    // await createBundle(bundle, RN_OSS_PROD);
+    // await createBundle(bundle, RN_OSS_PROFILING);
+    // await createBundle(bundle, RN_FB_DEV);
+    // await createBundle(bundle, RN_FB_PROD);
+    // await createBundle(bundle, RN_FB_PROFILING);
   }
 
   await Packaging.copyAllShims();

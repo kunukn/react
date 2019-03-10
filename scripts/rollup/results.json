@@ -53,8 +53,8 @@
       "filename": "react-dom.production.min.js",
       "bundleType": "UMD_PROD",
       "packageName": "react-dom",
-      "size": 107372,
-      "gzip": 34832
+      "size": 115802,
+      "gzip": 37550
     },
     {
       "filename": "react-dom.development.js",

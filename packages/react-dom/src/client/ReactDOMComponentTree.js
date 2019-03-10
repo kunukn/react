@@ -14,15 +14,15 @@ const randomKey = Math.random()
 const internalInstanceKey = '__reactInternalInstance$' + randomKey;
 const internalEventHandlersKey = '__reactEventHandlers$' + randomKey;
 
-export function precacheFiberNode(hostInst, node) {
+export let precacheFiberNode = (hostInst, node) => {
   node[internalInstanceKey] = hostInst;
-}
+};
 
 /**
  * Given a DOM node, return the closest ReactDOMComponent or
  * ReactDOMTextComponent instance ancestor.
  */
-export function getClosestInstanceFromNode(node) {
+export let getClosestInstanceFromNode = (node) => {
   if (node[internalInstanceKey]) {
     return node[internalInstanceKey];
   }
@@ -44,13 +44,13 @@ export function getClosestInstanceFromNode(node) {
   }
 
   return null;
-}
+};
 
 /**
  * Given a DOM node, return the ReactDOMComponent or ReactDOMTextComponent
  * instance, or null if the node was not rendered by this React.
  */
-export function getInstanceFromNode(node) {
+export let getInstanceFromNode = (node) => {
   const inst = node[internalInstanceKey];
   if (inst) {
     if (inst.tag === HostComponent || inst.tag === HostText) {
@@ -60,13 +60,13 @@ export function getInstanceFromNode(node) {
     }
   }
   return null;
-}
+};
 
 /**
  * Given a ReactDOMComponent or ReactDOMTextComponent, return the corresponding
  * DOM node.
  */
-export function getNodeFromInstance(inst) {
+export let getNodeFromInstance = (inst) => {
   if (inst.tag === HostComponent || inst.tag === HostText) {
     // In Fiber this, is just the state node right now. We assume it will be
     // a host component or host text.
@@ -78,10 +78,10 @@ export function getNodeFromInstance(inst) {
   invariant(false, 'getNodeFromInstance: Invalid argument.');
 }
 
-export function getFiberCurrentPropsFromNode(node) {
+export let getFiberCurrentPropsFromNode = (node) => {
   return node[internalEventHandlersKey] || null;
 }
 
-export function updateFiberProps(node, props) {
+export let updateFiberProps = (node, props) => {
   node[internalEventHandlersKey] = props;
 }

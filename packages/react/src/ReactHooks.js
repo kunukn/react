@@ -13,7 +13,7 @@ import warning from 'shared/warning';
 
 import ReactCurrentDispatcher from './ReactCurrentDispatcher';
 
-function resolveDispatcher() {
+let resolveDispatcher = () => {
   const dispatcher = ReactCurrentDispatcher.current;
   invariant(
     dispatcher !== null,
@@ -21,7 +21,7 @@ function resolveDispatcher() {
       '(https://fb.me/react-invalid-hook-call)',
   );
   return dispatcher;
-}
+};
 
 export function useContext<T>(
   Context: ReactContext<T>,

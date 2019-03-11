@@ -22,7 +22,7 @@ const RESERVED_PROPS = {
 
 let specialPropKeyWarningShown, specialPropRefWarningShown;
 
-function hasValidRef(config) {
+let hasValidRef = (config) => {
   if (__DEV__) {
     if (hasOwnProperty.call(config, 'ref')) {
       const getter = Object.getOwnPropertyDescriptor(config, 'ref').get;
@@ -32,9 +32,9 @@ function hasValidRef(config) {
     }
   }
   return config.ref !== undefined;
-}
+};
 
-function hasValidKey(config) {
+let hasValidKey = (config) => {
   if (__DEV__) {
     if (hasOwnProperty.call(config, 'key')) {
       const getter = Object.getOwnPropertyDescriptor(config, 'key').get;
@@ -44,9 +44,9 @@ function hasValidKey(config) {
     }
   }
   return config.key !== undefined;
-}
+};
 
-function defineKeyPropWarningGetter(props, displayName) {
+let defineKeyPropWarningGetter = (props, displayName) => {
   const warnAboutAccessingKey = function() {
     if (!specialPropKeyWarningShown) {
       specialPropKeyWarningShown = true;
@@ -65,9 +65,9 @@ function defineKeyPropWarningGetter(props, displayName) {
     get: warnAboutAccessingKey,
     configurable: true,
   });
-}
+};
 
-function defineRefPropWarningGetter(props, displayName) {
+let defineRefPropWarningGetter = (props, displayName) => {
   const warnAboutAccessingRef = function() {
     if (!specialPropRefWarningShown) {
       specialPropRefWarningShown = true;
@@ -86,7 +86,7 @@ function defineRefPropWarningGetter(props, displayName) {
     get: warnAboutAccessingRef,
     configurable: true,
   });
-}
+};
 
 /**
  * Factory method to create a new React element. This no longer adheres to
@@ -168,7 +168,7 @@ const ReactElement = function(type, key, ref, self, source, owner, props) {
  * Create and return a new ReactElement of the given type.
  * See https://reactjs.org/docs/react-api.html#createelement
  */
-export function createElement(type, config, children) {
+export let createElement = (type, config, children) => {
   let propName;
 
   // Reserved names are extracted
@@ -256,7 +256,7 @@ export function createElement(type, config, children) {
  * Return a function that produces ReactElements of a given type.
  * See https://reactjs.org/docs/react-api.html#createfactory
  */
-export function createFactory(type) {
+export let createFactory = (type) => {
   const factory = createElement.bind(null, type);
   // Expose the type on the factory and the prototype so that it can be
   // easily accessed on elements. E.g. `<Foo />.type === Foo`.
@@ -265,9 +265,9 @@ export function createFactory(type) {
   // Legacy hook: remove it
   factory.type = type;
   return factory;
-}
+};
 
-export function cloneAndReplaceKey(oldElement, newKey) {
+export let cloneAndReplaceKey = (oldElement, newKey) => {
   const newElement = ReactElement(
     oldElement.type,
     newKey,
@@ -279,13 +279,13 @@ export function cloneAndReplaceKey(oldElement, newKey) {
   );
 
   return newElement;
-}
+};
 
 /**
  * Clone and return a new ReactElement using element as the starting point.
  * See https://reactjs.org/docs/react-api.html#cloneelement
  */
-export function cloneElement(element, config, children) {
+export let cloneElement = (element, config, children) => {
   invariant(
     !(element === null || element === undefined),
     'React.cloneElement(...): The argument must be a React element, but you passed %s.',
@@ -363,10 +363,10 @@ export function cloneElement(element, config, children) {
  * @return {boolean} True if `object` is a ReactElement.
  * @final
  */
-export function isValidElement(object) {
+export let isValidElement = (object) => {
   return (
     typeof object === 'object' &&
     object !== null &&
     object.$$typeof === REACT_ELEMENT_TYPE
   );
-}
+};

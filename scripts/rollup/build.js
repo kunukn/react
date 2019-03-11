@@ -585,7 +585,8 @@ function handleRollupWarning(warning) {
     // so we'll fail the build on any of them.
     console.error();
     console.error(warning.message || warning);
-    console.error();
+    console.error(warning);
+    console.warn('React build was exited');
     process.exit(1);
   } else {
     // The warning is from one of the plugins.

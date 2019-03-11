@@ -9,7 +9,7 @@ import warningWithoutStack from 'shared/warningWithoutStack';
 
 const didWarnStateUpdateForUnmountedComponent = {};
 
-function warnNoop(publicInstance, callerName) {
+let warnNoop = (publicInstance, callerName) => {
   if (__DEV__) {
     const constructor = publicInstance.constructor;
     const componentName =

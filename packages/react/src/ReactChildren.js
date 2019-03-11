@@ -271,7 +271,7 @@ function forEachSingleChild(bookKeeping, child, name) {
  * @param {function(*, int)} forEachFunc
  * @param {*} forEachContext Context for forEachContext.
  */
-function forEachChildren(children, forEachFunc, forEachContext) {
+let forEachChildren = (children, forEachFunc, forEachContext) => {
   if (children == null) {
     return children;
   }
@@ -283,9 +283,9 @@ function forEachChildren(children, forEachFunc, forEachContext) {
   );
   traverseAllChildren(children, forEachSingleChild, traverseContext);
   releaseTraverseContext(traverseContext);
-}
+};
 
-function mapSingleChildIntoContext(bookKeeping, child, childKey) {
+let mapSingleChildIntoContext = (bookKeeping, child, childKey) => {
   const {result, keyPrefix, func, context} = bookKeeping;
 
   let mappedChild = func.call(context, child, bookKeeping.count++);
@@ -306,9 +306,9 @@ function mapSingleChildIntoContext(bookKeeping, child, childKey) {
     }
     result.push(mappedChild);
   }
-}
+};
 
-function mapIntoWithKeyPrefixInternal(children, array, prefix, func, context) {
+let mapIntoWithKeyPrefixInternal = (children, array, prefix, func, context) => {
   let escapedPrefix = '';
   if (prefix != null) {
     escapedPrefix = escapeUserProvidedKey(prefix) + '/';
@@ -321,7 +321,7 @@ function mapIntoWithKeyPrefixInternal(children, array, prefix, func, context) {
   );
   traverseAllChildren(children, mapSingleChildIntoContext, traverseContext);
   releaseTraverseContext(traverseContext);
-}
+};
 
 /**
  * Maps children that are typically specified as `props.children`.
@@ -336,14 +336,14 @@ function mapIntoWithKeyPrefixInternal(children, array, prefix, func, context) {
  * @param {*} context Context for mapFunction.
  * @return {object} Object containing the ordered map of results.
  */
-function mapChildren(children, func, context) {
+let mapChildren = (children, func, context) => {
   if (children == null) {
     return children;
   }
   const result = [];
   mapIntoWithKeyPrefixInternal(children, result, null, func, context);
   return result;
-}
+};
 
 /**
  * Count the number of children that are typically specified as
@@ -354,9 +354,9 @@ function mapChildren(children, func, context) {
  * @param {?*} children Children tree container.
  * @return {number} The number of children.
  */
-function countChildren(children) {
+let countChildren = children => {
   return traverseAllChildren(children, () => null, null);
-}
+};
 
 /**
  * Flatten a children object (typically specified as `props.children`) and
@@ -364,11 +364,11 @@ function countChildren(children) {
  *
  * See https://reactjs.org/docs/react-api.html#reactchildrentoarray
  */
-function toArray(children) {
+let toArray = children => {
   const result = [];
   mapIntoWithKeyPrefixInternal(children, result, null, child => child);
   return result;
-}
+};
 
 /**
  * Returns the first child in a collection of children and verifies that there
@@ -384,13 +384,13 @@ function toArray(children) {
  * @return {ReactElement} The first and only `ReactElement` contained in the
  * structure.
  */
-function onlyChild(children) {
+let onlyChild = children => {
   invariant(
     isValidElement(children),
     'React.Children.only expected to receive a single React element child.',
   );
   return children;
-}
+};
 
 export {
   forEachChildren as forEach,

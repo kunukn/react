@@ -107,7 +107,7 @@ function getBabelConfig(updateBabelOptions, bundleType, filename) {
         {
           modules: false,
           targets: {
-            node: 'current',
+            node: '6.5',
           },
         },
       ],
@@ -641,7 +641,7 @@ async function buildEverything() {
   // and to avoid any potential race conditions.
   // eslint-disable-next-line no-for-of-loops/no-for-of-loops
   for (const bundle of Bundles.bundles) {
-    if (bundle.entry !== 'react-dom') continue;
+    if (bundle.entry !== 'react') continue;
 
     // await createBundle(bundle, UMD_DEV);
     await createBundle(bundle, UMD_PROD);

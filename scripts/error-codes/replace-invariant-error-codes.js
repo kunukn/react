@@ -9,6 +9,7 @@
 const fs = require('fs');
 const evalToString = require('../shared/evalToString');
 const invertObject = require('./invertObject');
+let { addDefault } = require( "@babel/helper-module-imports");
 
 module.exports = function(babel) {
   const t = babel.types;
@@ -18,11 +19,16 @@ module.exports = function(babel) {
   // Generate a hygienic identifier
   function getProdInvariantIdentifier(path, file, localState) {
     if (!localState.prodInvariantIdentifier) {
-      localState.prodInvariantIdentifier = file.addImport(
+      localState.prodInvariantIdentifier = addDefault(
         'shared/reactProdInvariant',
-        'default',
-        'prodInvariant'
-      );
+        'reactProdInvariant',
+        { nameHint: "prodInvariant" });
+
+      // file.addImport(
+      //   'shared/reactProdInvariant',
+      //   'default',
+      //   'prodInvariant'
+      // );
     }
     return localState.prodInvariantIdentifier;
   }

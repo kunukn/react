@@ -101,6 +101,7 @@ function getBabelConfig(updateBabelOptions, bundleType, filename) {
   let options = {
     exclude: '/**/node_modules/**',
     presets: [],
+    //presets: ["@babel/preset-react", "@babel/preset-flow"],
     plugins: [],
   };
   if (updateBabelOptions) {
@@ -139,9 +140,9 @@ function getBabelConfig(updateBabelOptions, bundleType, filename) {
       return Object.assign({}, options, {
         plugins: options.plugins.concat([
           // Use object-assign polyfill in open source
-          path.resolve('./scripts/babel/transform-object-assign-require'),
+          //path.resolve('./scripts/babel/transform-object-assign-require'),
           // Minify invariant messages
-          require('../error-codes/replace-invariant-error-codes'),
+          //require('../error-codes/replace-invariant-error-codes'),
           // Wrap warning() calls in a __DEV__ check so they are stripped from production.
           require('../babel/wrap-warning-with-env-check'),
         ]),
@@ -342,6 +343,7 @@ function getPlugins(
     }),
     // Compile to ES5.
     babel(getBabelConfig(updateBabelOptions, bundleType)),
+    //babel({      babelrc: true,    }),
     // Remove 'use strict' from individual source files.
     {
       transform(source) {
@@ -564,7 +566,7 @@ function handleRollupWarning(warning) {
     // These tend to be important (e.g. clashes in namespaced exports)
     // so we'll fail the build on any of them.
     console.error();
-    console.error(warning.message || warning);
+    console.error(warning);
     console.error();
     process.exit(1);
   } else {
@@ -611,21 +613,24 @@ async function buildEverything() {
   // and to avoid any potential race conditions.
   // eslint-disable-next-line no-for-of-loops/no-for-of-loops
   for (const bundle of Bundles.bundles) {
-    await createBundle(bundle, UMD_DEV);
+
+    if (bundle.entry !== 'react') continue;
+
+    // await createBundle(bundle, UMD_DEV);
     await createBundle(bundle, UMD_PROD);
-    await createBundle(bundle, UMD_PROFILING);
-    await createBundle(bundle, NODE_DEV);
-    await createBundle(bundle, NODE_PROD);
-    await createBundle(bundle, NODE_PROFILING);
-    await createBundle(bundle, FB_WWW_DEV);
-    await createBundle(bundle, FB_WWW_PROD);
-    await createBundle(bundle, FB_WWW_PROFILING);
-    await createBundle(bundle, RN_OSS_DEV);
-    await createBundle(bundle, RN_OSS_PROD);
-    await createBundle(bundle, RN_OSS_PROFILING);
-    await createBundle(bundle, RN_FB_DEV);
-    await createBundle(bundle, RN_FB_PROD);
-    await createBundle(bundle, RN_FB_PROFILING);
+    // await createBundle(bundle, UMD_PROFILING);
+    // await createBundle(bundle, NODE_DEV);
+    // await createBundle(bundle, NODE_PROD);
+    // await createBundle(bundle, NODE_PROFILING);
+    // await createBundle(bundle, FB_WWW_DEV);
+    // await createBundle(bundle, FB_WWW_PROD);
+    // await createBundle(bundle, FB_WWW_PROFILING);
+    // await createBundle(bundle, RN_OSS_DEV);
+    // await createBundle(bundle, RN_OSS_PROD);
+    // await createBundle(bundle, RN_OSS_PROFILING);
+    // await createBundle(bundle, RN_FB_DEV);
+    // await createBundle(bundle, RN_FB_PROD);
+    // await createBundle(bundle, RN_FB_PROFILING);
   }
 
   await Packaging.copyAllShims();

@@ -7,6 +7,8 @@
 
 'use strict';
 
+let { addDefault } = require( "@babel/helper-module-imports");
+
 module.exports = function autoImporter(babel) {
   function getAssignIdent(path, file, state) {
     if (state.id) {

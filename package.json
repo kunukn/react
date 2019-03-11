@@ -4,6 +4,7 @@
     "packages/*"
   ],
   "devDependencies": {
+    "@mattiasbuelens/web-streams-polyfill": "0.1.0",
     "art": "^0.10.1",
     "babel-cli": "^6.6.5",
     "babel-code-frame": "^6.26.0",
@@ -32,6 +33,7 @@
     "babel-plugin-transform-object-rest-spread": "^6.6.5",
     "babel-plugin-transform-react-jsx-source": "^6.8.0",
     "babel-plugin-transform-regenerator": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
     "babel-preset-react": "^6.5.0",
     "babel-traverse": "^6.9.0",
     "babylon": "6.18.0",
@@ -83,8 +85,7 @@
     "targz": "^1.0.1",
     "through2": "^2.0.0",
     "tmp": "~0.0.28",
-    "typescript": "~1.8.10",
-    "@mattiasbuelens/web-streams-polyfill": "0.1.0"
+    "typescript": "~1.8.10"
   },
   "devEngines": {
     "node": "8.x || 9.x || 10.x || 11.x"
@@ -94,6 +95,7 @@
   },
   "scripts": {
     "build": "node ./scripts/rollup/build.js",
+    "b": "yarn build",
     "linc": "node ./scripts/tasks/linc.js",
     "lint": "node ./scripts/tasks/eslint.js",
     "lint-build": "node ./scripts/rollup/validate/index.js",

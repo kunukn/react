@@ -101,17 +101,7 @@ const closureOptions = {
 function getBabelConfig(updateBabelOptions, bundleType, filename) {
   let options = {
     exclude: '/**/node_modules/**',
-    presets: [
-      [
-        'env',
-        {
-          modules: false,
-          targets: {
-            node: '6.5',
-          },
-        },
-      ],
-    ],
+    presets: [],
     plugins: [],
   };
   if (updateBabelOptions) {

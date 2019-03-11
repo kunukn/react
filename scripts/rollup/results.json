@@ -11,8 +11,8 @@
       "filename": "react.production.min.js",
       "bundleType": "UMD_PROD",
       "packageName": "react",
-      "size": 12596,
-      "gzip": 4831
+      "size": 12669,
+      "gzip": 4902
     },
     {
       "filename": "react.development.js",

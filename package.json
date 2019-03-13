@@ -95,7 +95,8 @@
   },
   "scripts": {
     "build": "node ./scripts/rollup/build.js",
-    "b": "yarn build",
+    "b": "yarn build react/index --type=UMD",
+    "bb": "yarn build react/index,react-dom/index --type=UMD",
     "linc": "node ./scripts/tasks/linc.js",
     "lint": "node ./scripts/tasks/eslint.js",
     "lint-build": "node ./scripts/rollup/validate/index.js",

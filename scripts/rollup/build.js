@@ -632,23 +632,21 @@ async function buildEverything() {
   // and to avoid any potential race conditions.
   // eslint-disable-next-line no-for-of-loops/no-for-of-loops
   for (const bundle of Bundles.bundles) {
-    if (bundle.entry !== 'react') continue;
-
-    // await createBundle(bundle, UMD_DEV);
+    await createBundle(bundle, UMD_DEV);
     await createBundle(bundle, UMD_PROD);
-    // await createBundle(bundle, UMD_PROFILING);
-    // await createBundle(bundle, NODE_DEV);
-    // await createBundle(bundle, NODE_PROD);
-    // await createBundle(bundle, NODE_PROFILING);
-    // await createBundle(bundle, FB_WWW_DEV);
-    // await createBundle(bundle, FB_WWW_PROD);
-    // await createBundle(bundle, FB_WWW_PROFILING);
-    // await createBundle(bundle, RN_OSS_DEV);
-    // await createBundle(bundle, RN_OSS_PROD);
-    // await createBundle(bundle, RN_OSS_PROFILING);
-    // await createBundle(bundle, RN_FB_DEV);
-    // await createBundle(bundle, RN_FB_PROD);
-    // await createBundle(bundle, RN_FB_PROFILING);
+    await createBundle(bundle, UMD_PROFILING);
+    await createBundle(bundle, NODE_DEV);
+    await createBundle(bundle, NODE_PROD);
+    await createBundle(bundle, NODE_PROFILING);
+    await createBundle(bundle, FB_WWW_DEV);
+    await createBundle(bundle, FB_WWW_PROD);
+    await createBundle(bundle, FB_WWW_PROFILING);
+    await createBundle(bundle, RN_OSS_DEV);
+    await createBundle(bundle, RN_OSS_PROD);
+    await createBundle(bundle, RN_OSS_PROFILING);
+    await createBundle(bundle, RN_FB_DEV);
+    await createBundle(bundle, RN_FB_PROD);
+    await createBundle(bundle, RN_FB_PROFILING);
   }
 
   await Packaging.copyAllShims();

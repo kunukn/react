@@ -4,8 +4,8 @@
       "filename": "react.development.js",
       "bundleType": "UMD_DEV",
       "packageName": "react",
-      "size": 104785,
-      "gzip": 25920
+      "size": 103540,
+      "gzip": 25788
     },
     {
       "filename": "react.production.min.js",
@@ -788,8 +788,8 @@
       "filename": "react.profiling.min.js",
       "bundleType": "UMD_PROFILING",
       "packageName": "react",
-      "size": 14832,
-      "gzip": 5379
+      "size": 14687,
+      "gzip": 5423
     },
     {
       "filename": "react-dom.profiling.min.js",

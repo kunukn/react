@@ -66,6 +66,9 @@ export function getIteratorFn(maybeIterable: ?any): ?() => ?Iterator<*> {
   if (maybeIterable === null || typeof maybeIterable !== 'object') {
     return null;
   }
+  if (maybeIterator instanceof String) {
+    return null;
+  }
   const maybeIterator =
     (MAYBE_ITERATOR_SYMBOL && maybeIterable[MAYBE_ITERATOR_SYMBOL]) ||
     maybeIterable[FAUX_ITERATOR_SYMBOL];
